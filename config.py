@@ -34,14 +34,14 @@ mode = "train"
 # Experiment name, easy to save weights and log files
 exp_name = f"{model_arch_name.upper()}-ImageNet_1K"
 
-if mode == "train": ## undefined
+if mode == "train": ## If we are currently training the model
     # Dataset address
-    train_image_dir = "./data/ImageNet_1K/ILSVRC2012_img_train" ## undefined
-    valid_image_dir = "./data/ImageNet_1K/ILSVRC2012_img_val" ## undefined
+    train_image_dir = "./data/ImageNet_1K/ILSVRC2012_img_train" ## Directory which contains images used for training
+    valid_image_dir = "./data/ImageNet_1K/ILSVRC2012_img_val" ## Directory which contains images used for testing
 
-    image_size = 224 ## undefined
-    batch_size = 128 ## undefined
-    num_workers = 4 ## undefined
+    image_size = 224 ## Size of the images which will be fed to the model
+    batch_size = 128 ## Number of images processed simultaneously during training 
+    num_workers = 4 ## Number of processes used for loading the images into memory
 
     # The address to load the pretrained model
     pretrained_model_weights_path = "./results/pretrained_models/AlexNet-ImageNet_1K-9df8cd0f.pth.tar"
@@ -50,7 +50,7 @@ if mode == "train": ## undefined
     resume = ""
 
     # Total num epochs
-    epochs = 600 ## undefined
+    epochs = 600 ## Number of iterations the dataset will pass through the NN
  
     # Loss parameters
     loss_label_smoothing = 0.1 ## undefined
@@ -67,19 +67,19 @@ if mode == "train": ## undefined
     lr_scheduler_eta_min = 5e-5 ## undefined
 
     # How many iterations to print the training/validate result
-    train_print_frequency = 200 ## undefined
-    valid_print_frequency = 20 ## undefined
+    train_print_frequency = 200 ## How often should metrics be printed (in epochs)
+    valid_print_frequency = 20 ## How often should metrics be printed (in epochs)
 
 if mode == "test":
     # Test data address
     test_image_dir = "./data/ImageNet_1K/ILSVRC2012_img_val"
 
     # Test dataloader parameters
-    image_size = 224 ## undefined
-    batch_size = 256 ## undefined
-    num_workers = 4 ## undefined
+    image_size = 224 ## Size of the images which will be fed to the model
+    batch_size = 256 ## Number of images processed simultaneously during testing 
+    num_workers = 4 ## Number of processes used for loading the images into memory
 
     # How many iterations to print the testing result
-    test_print_frequency = 20 ## undefined
+    test_print_frequency = 20 ## How often should metrics be printed (in epochs)
 
     model_weights_path = "./results/pretrained_models/AlexNet-ImageNet_1K-9df8cd0f.pth.tar"
