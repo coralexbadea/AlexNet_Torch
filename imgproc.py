@@ -47,7 +47,7 @@ def image_to_tensor(image: np.ndarray, range_norm: bool, half: bool) -> torch.Te
 
     # Scale the image data from [0, 1] to [-1, 1]
     if range_norm:
-        tensor = tensor.mul(2.0).sub(1.0)## undefined
+        tensor = tensor.mul(2.0).sub(1.0)## Multiplies tensor by 2 and then subtracts 1
 
     # Convert torch.float32 image data type to torch.half image data type
     if half:
@@ -74,11 +74,11 @@ def tensor_to_image(tensor: torch.Tensor, range_norm: bool, half: bool) -> Any:
     """
     # Scale the image data from [-1, 1] to [0, 1]
     if range_norm:
-        tensor = tensor.add(1.0).div(2.0) ## undefined
+        tensor = tensor.add(1.0).div(2.0) ## Adds 1 to the tensor and then divides it by 2
 
     # Convert torch.float32 image data type to torch.half image data type
     if half:
-        tensor = tensor.half()## undefined
+        tensor = tensor.half()## Divides tensor in half
  
     image = tensor.squeeze(0).permute(1, 2, 0).mul(255).clamp(0, 255).cpu().numpy().astype("uint8")
 
@@ -93,7 +93,7 @@ def center_crop(
         images = [images]
 
     # Detect input image data type
-    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## undefined
+    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## Assigns value "Tensor" to input_type if condition is true, otherwise assigns "Numpy"
 
     if input_type == "Tensor":
         image_height, image_width = images[0].size()[-2:]
@@ -132,7 +132,7 @@ def random_crop(
         images = [images]
 
     # Detect input image data type
-    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## undefined
+    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## Assigns value "Tensor" to input_type if condition is true, otherwise assigns "Numpy"
 
     if input_type == "Tensor":
         image_height, image_width = images[0].size()[-2:] ## undefined
@@ -176,7 +176,7 @@ def random_rotate( ## undefined
         images = [images] ## undefined
 
     # Detect input image data type
-    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## undefined
+    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## Assigns value "Tensor" to input_type if condition is true, otherwise assigns "Numpy"
 
     if input_type == "Tensor":
         image_height, image_width = images[0].size()[-2:] ## undefined
