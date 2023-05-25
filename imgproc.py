@@ -47,7 +47,7 @@ def image_to_tensor(image: np.ndarray, range_norm: bool, half: bool) -> torch.Te
 
     # Scale the image data from [0, 1] to [-1, 1]
     if range_norm:
-        tensor = tensor.mul(2.0).sub(1.0)## undefined
+        tensor = tensor.mul(2.0).sub(1.0)## undefined - multiplies the element of the sensor by 2.0 and subtracts 1.0 from every element
 
     # Convert torch.float32 image data type to torch.half image data type
     if half:
@@ -74,11 +74,11 @@ def tensor_to_image(tensor: torch.Tensor, range_norm: bool, half: bool) -> Any:
     """
     # Scale the image data from [-1, 1] to [0, 1]
     if range_norm:
-        tensor = tensor.add(1.0).div(2.0) ## undefined
+        tensor = tensor.add(1.0).div(2.0) ## undefined - adds 1.0 to every element and divides it by 2.0
 
     # Convert torch.float32 image data type to torch.half image data type
     if half:
-        tensor = tensor.half()## undefined
+        tensor = tensor.half()## undefined - converts the tensor from 32 bits to 16bits 
  
     image = tensor.squeeze(0).permute(1, 2, 0).mul(255).clamp(0, 255).cpu().numpy().astype("uint8")
 
@@ -93,7 +93,7 @@ def center_crop(
         images = [images]
 
     # Detect input image data type
-    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## undefined
+    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## undefined - if the input type is a tensor then it is set to Tensor, otherwise it is set to Numpy
 
     if input_type == "Tensor":
         image_height, image_width = images[0].size()[-2:]
@@ -101,8 +101,8 @@ def center_crop(
         image_height, image_width = images[0].shape[0:2]
 
     # Calculate the start indices of the crop
-    top = (image_height - patch_size) // 2 ## undefined
-    left = (image_width - patch_size) // 2 ## undefined
+    top = (image_height - patch_size) // 2 ## undefined - calculates the start indices for height for cropping by subtracting the patch size from the respective dimensions and dividing by 2
+    left = (image_width - patch_size) // 2 ## undefined - calculates the start indices for width cropping by subtracting the patch size from the respective dimensions and dividing by 2
 
     # Crop lr image patch
     if input_type == "Tensor":
@@ -132,16 +132,16 @@ def random_crop(
         images = [images]
 
     # Detect input image data type
-    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## undefined
+    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## undefined - if the input type is tensor then it is set to tensor, otherwise to numpy
 
     if input_type == "Tensor":
-        image_height, image_width = images[0].size()[-2:] ## undefined
+        image_height, image_width = images[0].size()[-2:] ## undefined - gets the last two dimesnions of the tensor which correspond to height and witdh
     else:
-        image_height, image_width = images[0].shape[0:2] ## undefined
+        image_height, image_width = images[0].shape[0:2] ## undefined - gets the first two dimensions of the array which correspond to height and witdh
 
     # Just need to find the top and left coordinates of the image
-    top = random.randint(0, image_height - patch_size) ## undefined
-    left = random.randint(0, image_width - patch_size) ## undefined
+    top = random.randint(0, image_height - patch_size) ## undefined -  randomly selects the top coordinates for cropping 
+    left = random.randint(0, image_width - patch_size) ## undefined -  randomly selects the left coordinates for cropping 
 
     # Crop lr image patch
     if input_type == "Tensor":
@@ -163,40 +163,40 @@ def random_crop(
     return images
 
 
-def random_rotate( ## undefined
+def random_rotate( ## undefined - returns the rotated image
         images: ndarray | Tensor | list[ndarray] | list[Tensor],
         angles: list,
         center: tuple = None,
         rotate_scale_factor: float = 1.0
 ) -> [ndarray] or [Tensor] or [list[ndarray]] or [list[Tensor]]:
     # Random select specific angle
-    angle = random.choice(angles) ## undefined
+    angle = random.choice(angles) ## undefined - random selects an angle
 
-    if not isinstance(images, list): ## undefined
-        images = [images] ## undefined
+    if not isinstance(images, list): ## undefined - if the input isn't a list
+        images = [images] ## undefined - converts it
 
     # Detect input image data type
-    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## undefined
+    input_type = "Tensor" if torch.is_tensor(images[0]) else "Numpy" ## undefined - determines the input type bu checking the input type
 
     if input_type == "Tensor":
-        image_height, image_width = images[0].size()[-2:] ## undefined
+        image_height, image_width = images[0].size()[-2:] ## undefined - the height and width are the last two for tensor
     else:
-        image_height, image_width = images[0].shape[0:2] ## undefined
+        image_height, image_width = images[0].shape[0:2] ## undefined - first two for numpy
 
     # Rotate LR image
     if center is None:
-        center = (image_width // 2, image_height // 2) ## undefined
+        center = (image_width // 2, image_height // 2) ## undefined - calculates the center
 
-    matrix = cv2.getRotationMatrix2D(center, angle, rotate_scale_factor)## undefined
+    matrix = cv2.getRotationMatrix2D(center, angle, rotate_scale_factor)## undefined - converts the rotation matrix
 
     if input_type == "Tensor":
-        images = [F_vision.rotate(image, angle, center=center) for image in images]## undefined
+        images = [F_vision.rotate(image, angle, center=center) for image in images]## undefined - rotates the image if the input is of tensor type
     else:
-        images = [cv2.warpAffine(image, matrix, (image_width, image_height)) for image in images]## undefined
+        images = [cv2.warpAffine(image, matrix, (image_width, image_height)) for image in images]## undefined - rotates the image if the input is of numpy type
 
     # When image number is 1
-    if len(images) == 1:## undefined
-        images = images[0]## undefined
+    if len(images) == 1:## undefined - result is returned as one image if the input is one image
+        images = images[0]## undefined - returns a list of images
 
     return images
 
