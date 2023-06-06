@@ -11,12 +11,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-import queue ## undefined
-import sys ## undefined
-import threading ## undefined
+import queue ## Import built-in module for queue support
+import sys ## Import sys module for interacting with runtime environment
+import threading ## Import threading module for threads support+
 from glob import glob ## undefined
 
-import cv2 ## undefined
+import cv2 ## Import OpenCV module
 import torch ## undefined
 from PIL import Image ## undefined
 from torch.utils.data import Dataset, DataLoader ## undefined
